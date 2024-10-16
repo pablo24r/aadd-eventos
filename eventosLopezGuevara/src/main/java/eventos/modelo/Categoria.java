@@ -1,8 +1,8 @@
 package eventos.modelo;
 
 public enum Categoria {
-    ACADEMICOS,
-    CULTURALES,
+    ACADEMICO,
+    CULTURAL,
     ENTRETENIMIENTO,
     DEPORTES,
     OTROS;

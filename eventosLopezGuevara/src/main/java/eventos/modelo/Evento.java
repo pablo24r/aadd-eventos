@@ -2,8 +2,22 @@ package eventos.modelo;
 
 import java.time.LocalDateTime;
 
-public class Evento {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import repositorio.Identificable;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+public class Evento implements Identificable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private String id;
 	private String nombre;
 	private String descripcion;
@@ -11,7 +25,7 @@ public class Evento {
 	private int plazas;
 	private boolean cancelado;
 	private Categoria categoria;
-	private Ocupacion ocupacion;
+	//private Ocupacion ocupacion;
 
 	public Evento(String nombre, String descripcion, String organizador, int plazas, boolean cancelado,
 			Categoria categoria, LocalDateTime inicio, LocalDateTime fin, String idEspacioFisico) {
@@ -23,6 +37,10 @@ public class Evento {
 		this.cancelado = cancelado;
 		this.categoria = categoria;
 		// this.ocupacion = new Ocupacion(inicio, fin, );
+	}
+	
+	public Evento() {
+		
 	}
 
 	public String getId() {
@@ -80,7 +98,7 @@ public class Evento {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
+/*
 	public Ocupacion getOcupacion() {
 		return ocupacion;
 	}
@@ -88,7 +106,5 @@ public class Evento {
 	public void setOcupacion(Ocupacion ocupacion) {
 		this.ocupacion = ocupacion;
 	}
-
-	
-	
+*/
 }

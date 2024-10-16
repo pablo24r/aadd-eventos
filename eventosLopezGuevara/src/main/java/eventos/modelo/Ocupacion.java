@@ -2,7 +2,9 @@ package eventos.modelo;
 
 import java.time.LocalDateTime;
 
-public class Ocupacion {
+import repositorio.Identificable;
+
+public class Ocupacion implements Identificable{
 
 	private LocalDateTime inicio;
 	private LocalDateTime fin;
@@ -47,6 +49,18 @@ public class Ocupacion {
 
 	public void setActiva(boolean activa) {
 		this.activa = activa;
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setId(String id) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
