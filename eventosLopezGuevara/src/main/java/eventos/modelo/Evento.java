@@ -23,24 +23,27 @@ public class Evento implements Identificable {
 	private String descripcion;
 	private String organizador;
 	private int plazas;
-	private boolean cancelado;
+	private LocalDateTime inicio, fin;
+	private boolean cancelado = false;
 	private Categoria categoria;
-	//private Ocupacion ocupacion;
+	// private Ocupacion ocupacion;
 
-	public Evento(String nombre, String descripcion, String organizador, int plazas, boolean cancelado,
-			Categoria categoria, LocalDateTime inicio, LocalDateTime fin, String idEspacioFisico) {
+	public Evento(String nombre, String descripcion, String organizador, int plazas, Categoria categoria,
+			LocalDateTime inicio, LocalDateTime fin, String idEspacioFisico) {
 
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.organizador = organizador;
 		this.plazas = plazas;
-		this.cancelado = cancelado;
 		this.categoria = categoria;
+		this.inicio = inicio;
+		this.fin = fin;
+		
 		// this.ocupacion = new Ocupacion(inicio, fin, );
 	}
-	
+
 	public Evento() {
-		
+
 	}
 
 	public String getId() {
@@ -98,13 +101,28 @@ public class Evento implements Identificable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-/*
-	public Ocupacion getOcupacion() {
-		return ocupacion;
+
+	public LocalDateTime getInicio() {
+		return inicio;
 	}
 
-	public void setOcupacion(Ocupacion ocupacion) {
-		this.ocupacion = ocupacion;
+	public void setInicio(LocalDateTime inicio) {
+		this.inicio = inicio;
 	}
-*/
+
+	public LocalDateTime getFin() {
+		return fin;
+	}
+
+	public void setFin(LocalDateTime fin) {
+		this.fin = fin;
+	}
+	
+	
+
+	/*
+	 * public Ocupacion getOcupacion() { return ocupacion; }
+	 * 
+	 * public void setOcupacion(Ocupacion ocupacion) { this.ocupacion = ocupacion; }
+	 */
 }
