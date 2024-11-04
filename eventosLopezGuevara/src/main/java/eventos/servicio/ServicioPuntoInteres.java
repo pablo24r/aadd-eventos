@@ -18,40 +18,38 @@ import eventos.modelo.PuntoInteres;
 
 public class ServicioPuntoInteres implements IServicioPuntoInteres {
 
-	 private static final String GEO_NAMES_USERNAME = "aadd"; // Cambia este nombre de usuario si tienes uno propio
-	    private static final String GEO_NAMES_URL_TEMPLATE = "http://api.geonames.org/findNearbyWikipedia?username=%s&lang=ES&lat=%f&lng=%f";
+	private static final String GEO_NAMES_USERNAME = "aadd";
+	private static final String GEO_NAMES_URL = "http://api.geonames.org/findNearbyWikipedia?&lang=ES&username=";
 
-	    public List<PuntoInteres> puntosCercanos(double latitud, double longitud) throws Exception {
-	        String urlStr = String.format(GEO_NAMES_URL_TEMPLATE, GEO_NAMES_USERNAME, latitud, longitud);
-	        URL url = new URL("http://api.geonames.org/findNearbyWikipedia?&username=aadd&lang=ES&lat=37.984123153048316&lng=-1.1291804565199284");
-	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	        connection.setRequestMethod("GET");
+	public List<PuntoInteres> puntosCercanos(double latitud, double longitud) throws Exception {
+		String url = GEO_NAMES_URL + GEO_NAMES_USERNAME + "&lat=" + latitud + "&lng=" + longitud;
+		URL urlPI = new URL(url);
+		HttpURLConnection connection = (HttpURLConnection) urlPI.openConnection();
+		connection.setRequestMethod("GET");
 
-	        List<PuntoInteres> puntosDeInteres = new ArrayList<>();
-	        try (InputStream inputStream = connection.getInputStream()) {
-	            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	            DocumentBuilder builder = factory.newDocumentBuilder();
-	            Document document = builder.parse(inputStream);
-	            document.getDocumentElement().normalize();
-	            System.out.println(document.toString());
+		List<PuntoInteres> puntosDeInteres = new ArrayList<>();
+		try (InputStream inputStream = connection.getInputStream()) {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document document = builder.parse(inputStream);
+			document.getDocumentElement().normalize();
+			NodeList entryList = document.getElementsByTagName("entry");
+			for (int i = 0; i < entryList.getLength(); i++) {
+				Node node = entryList.item(i);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element element = (Element) node;
+					String title = element.getElementsByTagName("title").item(0).getTextContent();
+					String summary = element.getElementsByTagName("summary").item(0).getTextContent();
+					double distance = Double
+							.parseDouble(element.getElementsByTagName("distance").item(0).getTextContent());
+					String urlWiki = element.getElementsByTagName("wikipediaUrl").item(0).getTextContent();
 
-	            NodeList entryList = document.getElementsByTagName("entry");
-	            for (int i = 0; i < entryList.getLength(); i++) {
-	                Node node = entryList.item(i);
-	                if (node.getNodeType() == Node.ELEMENT_NODE) {
-	                    Element element = (Element) node;
-	                    String title = element.getElementsByTagName("title").item(0).getTextContent();
-	                    String summary = element.getElementsByTagName("summary").item(0).getTextContent();
-	                    double lat = Double.parseDouble(element.getElementsByTagName("lat").item(0).getTextContent());
-	                    double lng = Double.parseDouble(element.getElementsByTagName("lng").item(0).getTextContent());
-
-	                    PuntoInteres puntoInteres = new PuntoInteres(title, summary, 1000, "http://.........");
-	                    puntosDeInteres.add(puntoInteres);
-	                }
-	            }
-	        }
-	        return puntosDeInteres;
-	    }
-	
+					PuntoInteres puntoInteres = new PuntoInteres(title, summary, distance, urlWiki);
+					puntosDeInteres.add(puntoInteres);
+				}
+			}
+		}
+		return puntosDeInteres;
+	}
 
 }

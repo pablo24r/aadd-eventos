@@ -1,35 +1,49 @@
 package eventos.modelo;
 
+import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class EspacioFisico {
+import repositorio.Identificable;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+public class EspacioFisico implements Identificable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private String id;
-
 	private String nombre;
 	private String propietario;
 	private int capacidad;
 	private String direccion;
-	private float longitud;
-	private float latitud;
-	private List<PuntoInteres> PuntosInteres;
+	private double longitud;
+	private double latitud;
+	private List<PuntoInteres> puntosCercanos;
 	private String descripcion;
-	private boolean estado; // 0=cerrado 1=activo
+	private boolean activo;
+	private List<Ocupacion> ocupaciones;
 
-	public EspacioFisico(String nombre, String propietario, int capacidad, String direccion, float longitud,
-			float latitud, String descripcion) {
+	public EspacioFisico(String nombre, String propietario, int capacidad, String direccion, double lat, double lng,
+			List<PuntoInteres> lista, String descripcion) {
 		this.nombre = nombre;
 		this.propietario = propietario;
 		this.capacidad = capacidad;
 		this.direccion = direccion;
-		this.longitud = longitud;
-		this.latitud = latitud;
+		this.latitud = lat;
+		this.longitud = lng;
+		this.puntosCercanos = lista;
 		this.descripcion = descripcion;
+		this.activo = true;
+		this.ocupaciones = new LinkedList<Ocupacion>();
 	}
 
 	public String getId() {
@@ -72,28 +86,20 @@ public class EspacioFisico {
 		this.direccion = direccion;
 	}
 
-	public float getLongitud() {
+	public double getLongitud() {
 		return longitud;
 	}
 
-	public void setLongitud(float longitud) {
+	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
 
-	public float getLatitud() {
+	public double getLatitud() {
 		return latitud;
 	}
 
-	public void setLatitud(float latitud) {
+	public void setLatitud(double latitud) {
 		this.latitud = latitud;
-	}
-
-	public List<PuntoInteres> getPuntosInteres() {
-		return PuntosInteres;
-	}
-
-	public void setPuntosInteres(List<PuntoInteres> puntosInteres) {
-		PuntosInteres = puntosInteres;
 	}
 
 	public String getDescripcion() {
@@ -104,14 +110,36 @@ public class EspacioFisico {
 		this.descripcion = descripcion;
 	}
 
-	public boolean isEstado() {
-		return estado;
+	public boolean isActivo() {
+		return activo;
 	}
 
-	public void setEstado(boolean estado) {
-		this.estado = estado;
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
-	
-	
+
+	public List<PuntoInteres> getPuntosCercanos() {
+		return puntosCercanos;
+	}
+
+	public void setPuntosCercanos(List<PuntoInteres> puntosCercanos) {
+		this.puntosCercanos = puntosCercanos;
+	}
+
+	public List<Ocupacion> getOcupaciones() {
+		return ocupaciones;
+	}
+
+	public void setOcupaciones(List<Ocupacion> ocupaciones) {
+		this.ocupaciones = ocupaciones;
+	}
+
+	//TODO
+	public boolean estaLibre(LocalDateTime inicio, LocalDateTime fin) {
+		for (Ocupacion o : ocupaciones) {
+
+		}
+		return true;
+	}
 
 }

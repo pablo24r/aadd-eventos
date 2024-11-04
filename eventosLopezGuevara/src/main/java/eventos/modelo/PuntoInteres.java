@@ -3,14 +3,11 @@ package eventos.modelo;
 public class PuntoInteres {
 
 	private String nombre;
-
 	private String descripcion;
-
-	private int distancia;
-
+	private double distancia;
 	private String urlWiki;
 
-	public PuntoInteres(String nombre, String descripcion, int distancia, String urlWiki) {
+	public PuntoInteres(String nombre, String descripcion, double distancia, String urlWiki) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.distancia = distancia;
@@ -33,11 +30,11 @@ public class PuntoInteres {
 		this.descripcion = descripcion;
 	}
 
-	public int getDistancia() {
+	public double getDistancia() {
 		return distancia;
 	}
 
-	public void setDistancia(int distancia) {
+	public void setDistancia(double distancia) {
 		this.distancia = distancia;
 	}
 

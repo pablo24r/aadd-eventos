@@ -13,6 +13,7 @@ public class ProgramaPuntosInteres {
 		for (PuntoInteres pi : puntos) {
 			System.out.println(pi.getNombre());
 			System.out.println(pi.getDescripcion());
+			System.out.println(pi.getDistancia());
 			System.out.println(pi.getUrlWiki());
 			System.out.println();
 		}

@@ -11,6 +11,7 @@
 		<!-- añadir las entidades anotadas con el elemento class -->
 
 		<class>eventos.modelo.Evento</class>
+		<class>eventos.modelo.EspacioFisico</class>
 		<properties>
 
 			<property name="javax.persistence.jdbc.driver"
@@ -46,5 +47,7 @@
 		</properties>
 
 	</persistence-unit>
+
+
 
 </persistence>

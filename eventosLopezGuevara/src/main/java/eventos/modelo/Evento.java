@@ -9,8 +9,10 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import repositorio.Identificable;
+import utils.LocalDateTimeAdapter;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -23,6 +25,7 @@ public class Evento implements Identificable {
 	private String descripcion;
 	private String organizador;
 	private int plazas;
+	@XmlJavaTypeAdapter(value=LocalDateTimeAdapter.class)
 	private LocalDateTime inicio, fin;
 	private boolean cancelado = false;
 	private Categoria categoria;
@@ -38,7 +41,7 @@ public class Evento implements Identificable {
 		this.categoria = categoria;
 		this.inicio = inicio;
 		this.fin = fin;
-		
+
 		// this.ocupacion = new Ocupacion(inicio, fin, );
 	}
 
@@ -117,8 +120,6 @@ public class Evento implements Identificable {
 	public void setFin(LocalDateTime fin) {
 		this.fin = fin;
 	}
-	
-	
 
 	/*
 	 * public Ocupacion getOcupacion() { return ocupacion; }
