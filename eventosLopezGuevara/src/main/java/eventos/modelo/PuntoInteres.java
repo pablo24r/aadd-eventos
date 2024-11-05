@@ -1,7 +1,10 @@
 package eventos.modelo;
 
-public class PuntoInteres {
+import java.io.Serializable;
 
+public class PuntoInteres implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private String descripcion;
 	private double distancia;
@@ -44,6 +47,12 @@ public class PuntoInteres {
 
 	public void setUrlWiki(String urlWiki) {
 		this.urlWiki = urlWiki;
+	}
+
+	@Override
+	public String toString() {
+		return "PuntoInteres [nombre=" + nombre + ", descripcion=" + descripcion + ", distancia=" + distancia
+				+ ", urlWiki=" + urlWiki + "]";
 	}
 
 }

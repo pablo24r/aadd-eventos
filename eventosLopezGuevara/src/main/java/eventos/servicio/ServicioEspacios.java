@@ -41,7 +41,7 @@ public class ServicioEspacios implements IServicioEspacios {
 		if (capacidad >= 0)
 			espacio.setCapacidad(capacidad);
 		if (descripcion != null)
-			espacio.setCapacidad(capacidad);
+			espacio.setDescripcion(descripcion);
 		repositorio.update(espacio);
 		return espacio;
 	}
@@ -65,12 +65,12 @@ public class ServicioEspacios implements IServicioEspacios {
 		repositorio.update(espacio);
 	}
 
-	@Override // TODO
+	@Override
 	public List<EspacioFisico> buscarEspacios(LocalDateTime inicio, LocalDateTime fin, int capacidad)
 			throws RepositorioException, EntidadNoEncontrada {
 		List<EspacioFisico> espacios = new LinkedList<EspacioFisico>();
 		for (EspacioFisico e : repositorio.getAll()) {
-			if (e.getCapacidad() >= capacidad && e.estaLibre(inicio, fin))
+			if (e.getCapacidad() >= capacidad && e.estaLibre(inicio, fin) && e.isActivo())
 				espacios.add(e);
 		}
 		return espacios;

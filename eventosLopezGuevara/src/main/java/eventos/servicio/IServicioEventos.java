@@ -11,7 +11,7 @@ import repositorio.RepositorioException;
 public interface IServicioEventos {
 
 	String alta(String nombre, String descripcion, String organizador, Categoria categoria, LocalDateTime inicio,
-			LocalDateTime fin, int numPlazas, String idEspacio) throws RepositorioException;
+			LocalDateTime fin, int numPlazas, String idEspacio) throws RepositorioException, EntidadNoEncontrada;
 
 	Evento modificar(String id, String descripcion, LocalDateTime inicio, LocalDateTime fin, int numPlazas,
 			String idEspacio)  throws RepositorioException, EntidadNoEncontrada;

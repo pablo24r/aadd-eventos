@@ -43,7 +43,11 @@ public class EspacioFisico implements Identificable {
 		this.puntosCercanos = lista;
 		this.descripcion = descripcion;
 		this.activo = true;
-		this.ocupaciones = new LinkedList<Ocupacion>();
+		this.ocupaciones = new LinkedList<Ocupacion>(); // Registro de ocupaciones
+	}
+	
+	public EspacioFisico() {
+
 	}
 
 	public String getId() {
@@ -134,10 +138,12 @@ public class EspacioFisico implements Identificable {
 		this.ocupaciones = ocupaciones;
 	}
 
-	//TODO
-	public boolean estaLibre(LocalDateTime inicio, LocalDateTime fin) {
+	public boolean estaLibre(LocalDateTime inicioNueva, LocalDateTime finNueva) {
 		for (Ocupacion o : ocupaciones) {
-
+			LocalDateTime ini = o.getInicio();
+			LocalDateTime fin = o.getFin();
+			if( (inicioNueva.isAfter(ini) && inicioNueva.isBefore(fin)) || finNueva.isAfter(ini) && finNueva.isBefore(fin) )
+				return false;
 		}
 		return true;
 	}

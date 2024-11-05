@@ -25,11 +25,9 @@ public class Evento implements Identificable {
 	private String descripcion;
 	private String organizador;
 	private int plazas;
-	@XmlJavaTypeAdapter(value=LocalDateTimeAdapter.class)
-	private LocalDateTime inicio, fin;
 	private boolean cancelado = false;
 	private Categoria categoria;
-	// private Ocupacion ocupacion;
+	private Ocupacion ocupacion;
 
 	public Evento(String nombre, String descripcion, String organizador, int plazas, Categoria categoria,
 			LocalDateTime inicio, LocalDateTime fin, String idEspacioFisico) {
@@ -39,10 +37,6 @@ public class Evento implements Identificable {
 		this.organizador = organizador;
 		this.plazas = plazas;
 		this.categoria = categoria;
-		this.inicio = inicio;
-		this.fin = fin;
-
-		// this.ocupacion = new Ocupacion(inicio, fin, );
 	}
 
 	public Evento() {
@@ -106,24 +100,27 @@ public class Evento implements Identificable {
 	}
 
 	public LocalDateTime getInicio() {
-		return inicio;
+		return ocupacion.getInicio();
 	}
 
 	public void setInicio(LocalDateTime inicio) {
-		this.inicio = inicio;
+		ocupacion.setInicio(inicio);
 	}
 
 	public LocalDateTime getFin() {
-		return fin;
+		return ocupacion.getFin();
 	}
 
 	public void setFin(LocalDateTime fin) {
-		this.fin = fin;
+		ocupacion.setFin(fin);
 	}
 
-	/*
-	 * public Ocupacion getOcupacion() { return ocupacion; }
-	 * 
-	 * public void setOcupacion(Ocupacion ocupacion) { this.ocupacion = ocupacion; }
-	 */
+	public Ocupacion getOcupacion() {
+		return ocupacion;
+	}
+
+	public void setOcupacion(Ocupacion ocupacion) {
+		this.ocupacion = ocupacion;
+	}
+
 }

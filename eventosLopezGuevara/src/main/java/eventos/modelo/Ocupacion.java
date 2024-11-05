@@ -2,21 +2,17 @@ package eventos.modelo;
 
 import java.time.LocalDateTime;
 
-import repositorio.Identificable;
-
-public class Ocupacion implements Identificable{
+public class Ocupacion {
 
 	private LocalDateTime inicio;
 	private LocalDateTime fin;
 	private EspacioFisico espacio;
-	private boolean activa = true;
 
 	public Ocupacion(LocalDateTime inicio, LocalDateTime fin, EspacioFisico espacio) {
 		super();
 		this.inicio = inicio;
 		this.fin = fin;
 		this.espacio = espacio;
-
 	}
 
 	public LocalDateTime getInicio() {
@@ -42,25 +38,11 @@ public class Ocupacion implements Identificable{
 	public void setEspacio(EspacioFisico espacio) {
 		this.espacio = espacio;
 	}
-
+	
+	//  Una ocupación se considera activa si su fecha de fin es posterior a la fecha actual.
 	public boolean isActiva() {
-		return activa;
+		return fin.isAfter(LocalDateTime.now()); 
 	}
 
-	public void setActiva(boolean activa) {
-		this.activa = activa;
-	}
-
-	@Override
-	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setId(String id) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
