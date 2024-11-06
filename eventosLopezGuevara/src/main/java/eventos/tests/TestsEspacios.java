@@ -22,13 +22,13 @@ public class TestsEspacios {
 
 //		----	Tests Espacios Físicos ----
 
-//		String idEspacio = servEspacios.alta("Auditorio", "Ayto. Murcia", 5000, "Calle mayor 123", 37.99, -1.13, "blablabla");
-//		System.out.println(idEspacio);
+		String idEspacio = servEspacios.alta("Auditorio", "Ayto. Murcia", 5000, "Calle mayor 123", 37.99, -1.13, "blablabla");
+		System.out.println(idEspacio);
 		
-		servEspacios.modificar("701", null, 1000, "descripción 9");
-		servEspacios.asignarPuntos("701", ListaPuntosCercanos);
+		servEspacios.modificar(idEspacio, null, 1000, "descripción 9");
+		servEspacios.asignarPuntos(idEspacio, ListaPuntosCercanos);
 		//servEspacios.cerrar("701");
-		servEspacios.activar("701");
+		servEspacios.activar(idEspacio);
 		List<EspacioFisico> disponibles =servEspacios.buscarEspacios(LocalDateTime.now(), LocalDateTime.now().plusDays(7), 1000);
 		System.out.println("Espacios disponibles esta semana:");
 		for (EspacioFisico e : disponibles){

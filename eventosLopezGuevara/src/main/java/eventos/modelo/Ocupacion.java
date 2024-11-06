@@ -2,9 +2,7 @@ package eventos.modelo;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
-import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import utils.LocalDateTimeAdapter;
@@ -15,7 +13,6 @@ public class Ocupacion {
 	private LocalDateTime inicio;
 	@XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
 	private LocalDateTime fin;
-	@ManyToOne(cascade=CascadeType.ALL)
 	private EspacioFisico espacio;
 
 	public Ocupacion(LocalDateTime inicio, LocalDateTime fin, EspacioFisico espacio) {

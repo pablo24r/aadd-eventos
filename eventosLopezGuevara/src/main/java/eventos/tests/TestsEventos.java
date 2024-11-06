@@ -1,8 +1,10 @@
 package eventos.tests;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import eventos.modelo.Categoria;
+import eventos.servicio.EventoResumen;
 import eventos.servicio.IServicioEventos;
 import servicio.FactoriaServicios;
 
@@ -10,24 +12,19 @@ public class TestsEventos {
 
 	public static void main(String[] args) throws Exception {
 
-//		Evento ev = new Evento("Apertura curso 24/25", "blablablabablabal", "Pablo L", 100, Categoria.ACADEMICO,
-//				LocalDateTime.now(), LocalDateTime.now().plusDays(3), "patio");
-//
-//		Repositorio<Evento, String> repositorio = FactoriaRepositorios.getRepositorio(Evento.class);
-//
-//		String id = repositorio.add(ev);
-//
-//		Evento ev2 = repositorio.getById(id);
-//
-//		System.out.println(ev2.getId());
-//
-//		System.out.println(repositorio.getAll().size());
-//		System.out.println("ids:" + repositorio.getIds().toString());
-
 		IServicioEventos servicio = FactoriaServicios.getServicio(IServicioEventos.class);
 
-		String id = servicio.alta("Graduación", "curso 2024/25", "Decano", Categoria.ACADEMICO, LocalDateTime.now(),
-				LocalDateTime.now().plusDays(3), 1000, "701");
+		String id = servicio.alta("Graduación", "curso 2024/25", "Decano", Categoria.DEPORTES, LocalDateTime.now(),
+				LocalDateTime.now().plusDays(3), 1000, "1501");
 		System.out.println(id);
+		
+		
+		//servicio.cancelar(id);
+		
+		servicio.modificar("1951", "descripcion 23123213", null, null, 666, null);
+		
+		List<EventoResumen> eventosMes = servicio.eventosMes(11, 2024);
+		for(EventoResumen er : eventosMes)
+			System.out.println(er.toString());
 	}
 }

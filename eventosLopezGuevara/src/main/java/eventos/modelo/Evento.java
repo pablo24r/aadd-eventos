@@ -1,6 +1,8 @@
 package eventos.modelo;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import eventos.servicio.EventoResumen;
 import repositorio.Identificable;
 
 @XmlRootElement
@@ -121,6 +124,36 @@ public class Evento implements Identificable {
 
 	public void setOcupacion(Ocupacion ocupacion) {
 		this.ocupacion = ocupacion;
+	}
+	
+	public static EventoResumen toResumen(Evento evento) {
+	    if (evento == null) {
+	        throw new IllegalArgumentException("El evento no puede ser nulo");
+	    }
+
+	    // Extraer los datos básicos del evento
+	    String nombre = evento.getNombre();
+	    String descripcion = evento.getDescripcion();
+	    LocalDateTime inicio = evento.getInicio();
+	    Categoria categoria = evento.getCategoria();
+
+	    // Extraer los datos del espacio físico desde la ocupación
+	    String nombreEspacio = evento.getOcupacion().getEspacio().getNombre();
+	    String direccionEspacio = evento.getOcupacion().getEspacio().getDireccion();
+
+	    // Obtener los puntos de interés y ordenarlos por distancia ascendente
+	    List<PuntoInteres> puntosCercanos = evento.getOcupacion().getEspacio().getPuntosCercanos();
+
+	    // Asumimos que PuntoInteres tiene un método 'getDistancia()' que devuelve la distancia.
+	    puntosCercanos.sort((p1, p2) -> Double.compare(p1.getDistancia(), p2.getDistancia()));
+
+	    // Crear la lista de nombres de los puntos de interés
+	    List<String> puntosCercanosNombres = puntosCercanos.stream()
+	            .map(PuntoInteres::getNombre) 
+	            .collect(Collectors.toList());
+
+	    // Crear y devolver el resumen del evento
+	    return new EventoResumen(nombre, descripcion, nombreEspacio, direccionEspacio, inicio, categoria, puntosCercanosNombres);
 	}
 
 }
