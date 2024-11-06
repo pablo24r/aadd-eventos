@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class PuntoInteres implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String nombre;
+	private String nombre; // Suponemos que el nombre es unico
 	private String descripcion;
 	private double distancia;
 	private String urlWiki;

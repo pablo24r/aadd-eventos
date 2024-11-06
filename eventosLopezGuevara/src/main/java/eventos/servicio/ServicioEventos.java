@@ -25,17 +25,7 @@ public class ServicioEventos implements IServicioEventos {
 		EspacioFisico espacio = repoEspacios.getById(idEspacio);
 		Evento evento = new Evento(nombre, descripcion, organizador, numPlazas, categoria, inicio, fin, idEspacio);
 
-		if (espacio.getCapacidad() >= numPlazas) {
-			Ocupacion ocupacion = new Ocupacion(inicio, fin, espacio);
-			evento.setOcupacion(ocupacion);
-
-			List<Ocupacion> ocupacionesEspacio = espacio.getOcupaciones();
-			ocupacionesEspacio.add(ocupacion);
-			espacio.setOcupaciones(ocupacionesEspacio);
-			repoEspacios.update(espacio);
-
-			return repoEventos.add(evento);
-		}
+		
 
 		System.err.println("El número de plazas del evento excede la capacidad del espacio: " + espacio.getNombre());
 		return null;
@@ -46,29 +36,7 @@ public class ServicioEventos implements IServicioEventos {
 			String idEspacio) throws RepositorioException, EntidadNoEncontrada {
 		Evento evento = repoEventos.getById(id);
 
-		if (descripcion != null)
-			evento.setDescripcion(descripcion);
-		if (idEspacio != null) {
-			EspacioFisico espacio = repoEspacios.getById(idEspacio);
-			Ocupacion ocupacion = new Ocupacion(inicio, fin, espacio);
-			evento.setOcupacion(ocupacion);
-
-			espacio.getOcupaciones().add(ocupacion);
-			repoEspacios.update(espacio);
-		}
-		if (inicio != null && evento.getOcupacion().getEspacio().estaLibre(inicio, evento.getOcupacion().getFin())) {
-			evento.setInicio(inicio);
-			EspacioFisico espacio = repoEspacios.getById(evento.getOcupacion().getEspacio().getId());
-			Ocupacion ocupacion = new Ocupacion(inicio, evento.getOcupacion().getFin(), espacio);
-			//TODO
-			repoEspacios.update(espacio);
-			evento.setOcupacion(ocupacion);
-		}
-		if (fin != null && evento.getOcupacion().getEspacio().estaLibre(evento.getOcupacion().getInicio(), fin))
-			evento.setFin(fin);
-		if (numPlazas != -1 && numPlazas <= evento.getOcupacion().getEspacio().getCapacidad())
-			evento.setPlazas(numPlazas);
-		repoEventos.update(evento);
+		
 		return evento;
 	}
 

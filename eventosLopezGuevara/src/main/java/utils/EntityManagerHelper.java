@@ -5,48 +5,53 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class EntityManagerHelper {
-    private static EntityManagerFactory entityManagerFactory;
+	private static EntityManagerFactory entityManagerFactory;
 
-    private static final ThreadLocal<EntityManager> entityManagerHolder;
+	private static final ThreadLocal<EntityManager> entityManagerHolder;
 
+	static {
+		try {
 
-    static {    
+			entityManagerFactory = Persistence.createEntityManagerFactory("eventos");
 
-        entityManagerFactory = Persistence.createEntityManagerFactory("eventos");
+			entityManagerHolder = new ThreadLocal<EntityManager>();
 
-        entityManagerHolder = new ThreadLocal<EntityManager>();
+		} catch (Throwable t) {
+			System.err.println("Failure during static initialization: " + t.getMessage());
+			t.printStackTrace();
 
-    }
+			throw t;
+		}
 
+	}
 
-    public static EntityManager getEntityManager() {
+	public static EntityManager getEntityManager() {
 
-        EntityManager entityManager = entityManagerHolder.get();
+		EntityManager entityManager = entityManagerHolder.get();
 
-        if (entityManager == null || !entityManager.isOpen()) {
+		if (entityManager == null || !entityManager.isOpen()) {
 
-            entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 
-            entityManagerHolder.set(entityManager);
+			entityManagerHolder.set(entityManager);
 
-        }
+		}
 
-        return entityManager;
+		return entityManager;
 
-    }
+	}
 
+	public static void closeEntityManager() {
 
-    public static void closeEntityManager() {
+		EntityManager entityManager = entityManagerHolder.get();
 
-        EntityManager entityManager = entityManagerHolder.get();
+		if (entityManager != null) {
 
-        if (entityManager != null) {
+			entityManagerHolder.set(null);
 
-            entityManagerHolder.set(null);
+			entityManager.close();
 
-            entityManager.close();
+		}
 
-        }
-
-    }
+	}
 }

@@ -2,10 +2,20 @@ package eventos.modelo;
 
 import java.time.LocalDateTime;
 
-public class Ocupacion {
+import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import utils.LocalDateTimeAdapter;
+
+@Embeddable
+public class Ocupacion {
+	@XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
 	private LocalDateTime inicio;
+	@XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
 	private LocalDateTime fin;
+	@ManyToOne(cascade=CascadeType.ALL)
 	private EspacioFisico espacio;
 
 	public Ocupacion(LocalDateTime inicio, LocalDateTime fin, EspacioFisico espacio) {
@@ -13,6 +23,10 @@ public class Ocupacion {
 		this.inicio = inicio;
 		this.fin = fin;
 		this.espacio = espacio;
+	}
+
+	public Ocupacion() { // POJO
+	
 	}
 
 	public LocalDateTime getInicio() {
@@ -38,11 +52,11 @@ public class Ocupacion {
 	public void setEspacio(EspacioFisico espacio) {
 		this.espacio = espacio;
 	}
-	
-	//  Una ocupación se considera activa si su fecha de fin es posterior a la fecha actual.
-	public boolean isActiva() {
-		return fin.isAfter(LocalDateTime.now()); 
-	}
 
+	// Una ocupación se considera activa si su fecha de fin es posterior a la fecha
+	// actual.
+	public boolean isActiva() {
+		return fin.isAfter(LocalDateTime.now());
+	}
 
 }

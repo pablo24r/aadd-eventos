@@ -6,7 +6,7 @@ import eventos.modelo.Categoria;
 import eventos.servicio.IServicioEventos;
 import servicio.FactoriaServicios;
 
-public class Prueba {
+public class TestsEventos {
 
 	public static void main(String[] args) throws Exception {
 
@@ -27,7 +27,7 @@ public class Prueba {
 		IServicioEventos servicio = FactoriaServicios.getServicio(IServicioEventos.class);
 
 		String id = servicio.alta("Graduación", "curso 2024/25", "Decano", Categoria.ACADEMICO, LocalDateTime.now(),
-				LocalDateTime.now().plusDays(3), 1000, "123");
+				LocalDateTime.now().plusDays(3), 1000, "701");
 		System.out.println(id);
 	}
 }

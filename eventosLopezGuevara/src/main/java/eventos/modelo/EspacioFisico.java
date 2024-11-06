@@ -1,13 +1,12 @@
 package eventos.modelo;
 
-import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,10 +26,10 @@ public class EspacioFisico implements Identificable {
 	private String direccion;
 	private double longitud;
 	private double latitud;
+	@Lob
 	private List<PuntoInteres> puntosCercanos;
 	private String descripcion;
 	private boolean activo;
-	private List<Ocupacion> ocupaciones;
 
 	public EspacioFisico(String nombre, String propietario, int capacidad, String direccion, double lat, double lng,
 			List<PuntoInteres> lista, String descripcion) {
@@ -43,7 +42,6 @@ public class EspacioFisico implements Identificable {
 		this.puntosCercanos = lista;
 		this.descripcion = descripcion;
 		this.activo = true;
-		this.ocupaciones = new LinkedList<Ocupacion>(); // Registro de ocupaciones
 	}
 	
 	public EspacioFisico() {
@@ -130,22 +128,6 @@ public class EspacioFisico implements Identificable {
 		this.puntosCercanos = puntosCercanos;
 	}
 
-	public List<Ocupacion> getOcupaciones() {
-		return ocupaciones;
-	}
 
-	public void setOcupaciones(List<Ocupacion> ocupaciones) {
-		this.ocupaciones = ocupaciones;
-	}
-
-	public boolean estaLibre(LocalDateTime inicioNueva, LocalDateTime finNueva) {
-		for (Ocupacion o : ocupaciones) {
-			LocalDateTime ini = o.getInicio();
-			LocalDateTime fin = o.getFin();
-			if( (inicioNueva.isAfter(ini) && inicioNueva.isBefore(fin)) || finNueva.isAfter(ini) && finNueva.isBefore(fin) )
-				return false;
-		}
-		return true;
-	}
 
 }

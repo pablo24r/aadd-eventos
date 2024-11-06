@@ -2,6 +2,7 @@ package eventos.modelo;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,10 +10,8 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import repositorio.Identificable;
-import utils.LocalDateTimeAdapter;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,6 +26,7 @@ public class Evento implements Identificable {
 	private int plazas;
 	private boolean cancelado = false;
 	private Categoria categoria;
+	@Embedded  
 	private Ocupacion ocupacion;
 
 	public Evento(String nombre, String descripcion, String organizador, int plazas, Categoria categoria,
