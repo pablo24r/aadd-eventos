@@ -2,19 +2,17 @@ package eventos.modelo;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import repositorio.Identificable;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class EspacioFisico implements Identificable {
 	@Id
@@ -26,8 +24,10 @@ public class EspacioFisico implements Identificable {
 	private String direccion;
 	private double longitud;
 	private double latitud;
-	@Lob
+	@ElementCollection
+	@CollectionTable(name = "punto_interes", joinColumns = @JoinColumn(name = "ESPACIOFISICO"))
 	private List<PuntoInteres> puntosCercanos;
+	@Lob
 	private String descripcion;
 	private boolean activo;
 
@@ -43,7 +43,7 @@ public class EspacioFisico implements Identificable {
 		this.descripcion = descripcion;
 		this.activo = true;
 	}
-	
+
 	public EspacioFisico() {
 
 	}
@@ -127,7 +127,5 @@ public class EspacioFisico implements Identificable {
 	public void setPuntosCercanos(List<PuntoInteres> puntosCercanos) {
 		this.puntosCercanos = puntosCercanos;
 	}
-
-
 
 }

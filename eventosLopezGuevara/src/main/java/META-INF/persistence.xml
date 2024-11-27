@@ -43,6 +43,9 @@
 			<property name="eclipselink.cache.size.default" value="0" />
 
 			<property name="eclipselink.refresh" value="true" />
+			
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+
 
 		</properties>
 

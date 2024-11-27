@@ -2,10 +2,15 @@ package eventos.modelo;
 
 import java.io.Serializable;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Lob;
+
+@Embeddable
 public class PuntoInteres implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String nombre; // Suponemos que el nombre es unico
+	@Lob
 	private String descripcion;
 	private double distancia;
 	private String urlWiki;
@@ -15,6 +20,10 @@ public class PuntoInteres implements Serializable {
 		this.descripcion = descripcion;
 		this.distancia = distancia;
 		this.urlWiki = urlWiki;
+	}
+	
+	public PuntoInteres() { // POJO
+		
 	}
 
 	public String getNombre() {

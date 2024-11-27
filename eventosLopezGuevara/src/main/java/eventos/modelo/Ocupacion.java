@@ -3,16 +3,16 @@ package eventos.modelo;
 import java.time.LocalDateTime;
 
 import javax.persistence.Embeddable;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import utils.LocalDateTimeAdapter;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Embeddable
 public class Ocupacion {
-	@XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
 	private LocalDateTime inicio;
-	@XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
 	private LocalDateTime fin;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "ID_ESPACIO", foreignKey = @ForeignKey(name = "FK_EVENTO_ESPACIO_UNICO"))
 	private EspacioFisico espacio;
 
 	public Ocupacion(LocalDateTime inicio, LocalDateTime fin, EspacioFisico espacio) {

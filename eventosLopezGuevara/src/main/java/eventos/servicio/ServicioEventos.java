@@ -22,9 +22,39 @@ public class ServicioEventos implements IServicioEventos {
 	public String alta(String nombre, String descripcion, String organizador, Categoria categoria, LocalDateTime inicio,
 			LocalDateTime fin, int numPlazas, String idEspacio) throws RepositorioException, EntidadNoEncontrada {
 
-		EspacioFisico espacio = repoEspacios.getById(idEspacio);
+		// Comprobación de precondiciones para los parámetros del evento
+		if (nombre == null || nombre.isEmpty()) {
+			throw new IllegalArgumentException("El nombre del evento no puede ser nulo o vacío.");
+		}
+		if (descripcion == null || descripcion.isEmpty()) {
+			throw new IllegalArgumentException("La descripción del evento no puede ser nula o vacía.");
+		}
+		if (organizador == null || organizador.isEmpty()) {
+			throw new IllegalArgumentException("El organizador del evento no puede ser nulo o vacío.");
+		}
+		if (categoria == null) {
+			throw new IllegalArgumentException("La categoría del evento no puede ser nula.");
+		}
+		if (inicio == null || fin == null) {
+			throw new IllegalArgumentException("Las fechas de inicio y fin no pueden ser nulas.");
+		}
+		if (inicio.isAfter(fin)) {
+			throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin.");
+		}
+		if (numPlazas <= 0) {
+			throw new IllegalArgumentException("El número de plazas debe ser mayor que cero.");
+		}
+		if (idEspacio == null || idEspacio.isEmpty()) {
+			throw new IllegalArgumentException("El ID del espacio no puede ser nulo o vacío.");
+		}
 
-		// Comprobaciones
+		// Verificar que el espacio exista en el repositorio
+		EspacioFisico espacio = repoEspacios.getById(idEspacio);
+		if (espacio == null) {
+			throw new EntidadNoEncontrada("El espacio con el ID " + idEspacio + " no existe.");
+		}
+
+		// Comprobaciones adicionales
 		if (espacio.getCapacidad() < numPlazas) {
 			System.err
 					.println("El número de plazas del evento excede la capacidad del espacio: " + espacio.getNombre());
@@ -71,7 +101,15 @@ public class ServicioEventos implements IServicioEventos {
 
 	@Override
 	public void cancelar(String id) throws RepositorioException, EntidadNoEncontrada {
+		// Verificación de precondiciones para la cancelación
+		if (id == null || id.isEmpty()) {
+			throw new IllegalArgumentException("El ID del evento no puede ser nulo o vacío.");
+		}
+
 		Evento evento = repoEventos.getById(id);
+		if (evento == null) {
+			throw new EntidadNoEncontrada("El evento con ID " + id + " no existe.");
+		}
 		evento.setCancelado(true);
 		evento.setOcupacion(null);
 		repoEventos.update(evento);
@@ -79,6 +117,14 @@ public class ServicioEventos implements IServicioEventos {
 
 	@Override
 	public List<EventoResumen> eventosMes(int month, int year) throws RepositorioException {
+		// Verificación de precondiciones para la consulta de eventos
+		if (month < 1 || month > 12) {
+			throw new IllegalArgumentException("El mes debe estar entre 1 y 12.");
+		}
+		if (year < 0) {
+			throw new IllegalArgumentException("El año debe ser mayor que cero.");
+		}
+
 		List<EventoResumen> lista = new LinkedList<EventoResumen>();
 		for (Evento e : repoEventos.getAll()) {
 			if (e.getOcupacion() != null) {
