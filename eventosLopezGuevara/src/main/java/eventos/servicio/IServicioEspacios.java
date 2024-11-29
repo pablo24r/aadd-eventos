@@ -3,6 +3,7 @@ package eventos.servicio;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import eventos.dto.EspacioDTO;
 import eventos.modelo.EspacioFisico;
 import eventos.modelo.PuntoInteres;
 import repositorio.EntidadNoEncontrada;
@@ -22,4 +23,8 @@ public interface IServicioEspacios {
 	void activar(String idEspacio) throws RepositorioException, EntidadNoEncontrada ;
 	
 	List<EspacioFisico> buscarEspacios(LocalDateTime inicio, LocalDateTime fin, int capacidad) throws RepositorioException, EntidadNoEncontrada ;
+	
+	List<EspacioDTO> verEspaciosCreados(String usuario) throws RepositorioException;
+	
+	EspacioFisico getEspacio(String id) throws RepositorioException, EntidadNoEncontrada ;
 }

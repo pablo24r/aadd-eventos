@@ -1,9 +1,11 @@
 package eventos.servicio;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+import eventos.dto.EspacioDTO;
 import eventos.modelo.EspacioFisico;
 import eventos.modelo.Evento;
 import eventos.modelo.PuntoInteres;
@@ -12,7 +14,8 @@ import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
 
-public class ServicioEspacios implements IServicioEspacios {
+@SuppressWarnings("serial")
+public class ServicioEspacios implements IServicioEspacios, Serializable {
 	private Repositorio<EspacioFisico, String> repoEspacios = FactoriaRepositorios.getRepositorio(EspacioFisico.class);
 	private Repositorio<Evento, String> repoEventos = FactoriaRepositorios.getRepositorio(Evento.class);
 
@@ -181,5 +184,20 @@ public class ServicioEspacios implements IServicioEspacios {
 			}
 		}
 		return espaciosDisponibles;
+	}
+
+	@Override
+	public List<EspacioDTO> verEspaciosCreados(String usuario) throws RepositorioException {
+		List<EspacioDTO> espacios = new LinkedList<EspacioDTO>();
+		for (EspacioFisico ef : repoEspacios.getAll()) {
+			if (ef.getPropietario().equals(usuario))
+				espacios.add(ef.toDTO());
+		}
+		return espacios;
+	}
+	
+	@Override
+	public EspacioFisico getEspacio(String id) throws RepositorioException, EntidadNoEncontrada {
+		return repoEspacios.getById(id);
 	}
 }

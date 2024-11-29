@@ -1,0 +1,31 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="estilo1" value="current" />
+
+	<!-- Contenido principal -->
+	<ui:define name="content">
+		<h:form>
+			<p:panel header="#{text.login}">
+				<p:growl id="growl" showDetail="true" />
+				<p:outputLabel value="#{text['nombreUsuario']}" for="nombreUsuario" />
+				<p:inputText id="nombreUsuario" value="#{loginBean.nombreUsuario}"
+					placeholder="#{text.inputNombre}" />
+
+				<!-- Espaciado vertical -->
+				<div style="margin-bottom: 20px;"></div>
+
+				<p:commandButton value="#{text.btnPropietario}"
+					action="#{loginBean.iniciarSesion('propietario')}"
+					icon="pi pi-user" update="growl" />
+				<p:spacer width="20px" />
+				<p:commandButton value="#{text.btnOrganizador}"
+					action="#{loginBean.iniciarSesion('organizador')}"
+					icon="pi pi-users" update="growl" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

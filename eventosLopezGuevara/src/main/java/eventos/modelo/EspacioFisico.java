@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 
+import eventos.dto.EspacioDTO;
 import repositorio.Identificable;
 
 @Entity
@@ -126,6 +127,10 @@ public class EspacioFisico implements Identificable {
 
 	public void setPuntosCercanos(List<PuntoInteres> puntosCercanos) {
 		this.puntosCercanos = puntosCercanos;
+	}
+
+	public EspacioDTO toDTO() {
+		return new EspacioDTO(getId(), getNombre(), getCapacidad() + "", getDireccion(), isActivo() + "");
 	}
 
 }

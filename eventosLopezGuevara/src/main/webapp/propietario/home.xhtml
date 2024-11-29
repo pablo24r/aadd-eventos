@@ -1,0 +1,59 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">
+        Detalle encuesta
+    </ui:define>
+
+	<ui:define name="metadata">
+
+		<f:metadata>
+			<f:viewAction
+				action="#{propietarioBean.cargarEspacios(loginBean.nombreUsuario)}" />
+		</f:metadata>
+	</ui:define>
+
+	<!-- Contenido principal -->
+	<ui:define name="content">
+		<h:body>
+			<h:form id="espaciosForm">
+				<p:panel header="Espacios Creados">
+					<h:dataTable value="#{propietarioBean.espacios}" var="espacio"
+						styleClass="ui-widget" emptyMessage="No hay espacios disponibles">
+						<h:column>
+							<f:facet name="header">Nombre</f:facet>
+                        #{espacio.nombre}
+                    </h:column>
+
+						<h:column>
+							<f:facet name="header">Capacidad</f:facet>
+                        #{espacio.capacidad}
+                    </h:column>
+
+						<h:column>
+							<f:facet name="header">Dirección</f:facet>
+                        #{espacio.direccion}
+                    </h:column>
+
+						<h:column>
+							<f:facet name="header">Activo</f:facet>
+                        #{espacio.estado}
+                    </h:column>
+
+						<h:column>
+							<f:facet name="header">Acciones</f:facet>
+							<p:commandButton value="Cambiar estado"
+								action="#{propietarioBean.cambiarEstado(espacio.id)}"
+								icon="pi pi-refresh"
+								update=":espaciosForm" />
+						</h:column>
+					</h:dataTable>
+				</p:panel>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

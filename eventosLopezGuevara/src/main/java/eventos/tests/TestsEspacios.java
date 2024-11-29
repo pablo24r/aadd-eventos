@@ -3,6 +3,7 @@ package eventos.tests;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import eventos.dto.EspacioDTO;
 import eventos.modelo.EspacioFisico;
 import eventos.modelo.PuntoInteres;
 import eventos.servicio.IServicioEspacios;
@@ -22,7 +23,7 @@ public class TestsEspacios {
 
 //		----	Tests Espacios Físicos ----
 
-		String idEspacio = servEspacios.alta("Auditorio", "Ayto. Murcia", 5000, "Calle mayor 123", 37.99, -1.13, "blablabla");
+		String idEspacio = servEspacios.alta("Auditorio", "Pablo", 5000, "Calle mayor 123", 37.99, -1.13, "blablabla");
 		System.out.println(idEspacio);
 		
 		servEspacios.modificar(idEspacio, null, 1000, "descripción 9");
@@ -32,6 +33,12 @@ public class TestsEspacios {
 		List<EspacioFisico> disponibles =servEspacios.buscarEspacios(LocalDateTime.now(), LocalDateTime.now().plusDays(7), 1000);
 		System.out.println("Espacios disponibles esta semana:");
 		for (EspacioFisico e : disponibles){
+			System.out.println(e.getNombre());
+		}
+		
+		List<EspacioDTO> espaciosPablo = servEspacios.verEspaciosCreados("Pablo");
+		System.out.println("Espacios creados por Pablo:");
+		for (EspacioDTO e : espaciosPablo){
 			System.out.println(e.getNombre());
 		}
 	}
