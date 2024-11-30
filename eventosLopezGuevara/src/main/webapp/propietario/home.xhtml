@@ -5,15 +5,11 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="title">
-        Detalle encuesta
-    </ui:define>
-
 	<ui:define name="metadata">
 
 		<f:metadata>
 			<f:viewAction
-				action="#{propietarioBean.cargarEspacios(loginBean.nombreUsuario)}" />
+				action="#{propietarioBean.cargarEspacios(loginBean.nombreUsuario, loginBean.rol)}" />
 		</f:metadata>
 	</ui:define>
 
@@ -21,32 +17,32 @@
 	<ui:define name="content">
 		<h:body>
 			<h:form id="espaciosForm">
-				<p:panel header="Espacios Creados">
+				<p:panel header="#{text.espacios}">
 					<h:dataTable value="#{propietarioBean.espacios}" var="espacio"
 						styleClass="ui-widget" emptyMessage="No hay espacios disponibles">
 						<h:column>
-							<f:facet name="header">Nombre</f:facet>
+							<f:facet name="header">#{text.nombre}</f:facet>
                         #{espacio.nombre}
                     </h:column>
 
 						<h:column>
-							<f:facet name="header">Capacidad</f:facet>
+							<f:facet name="header">#{text.capacidad}</f:facet>
                         #{espacio.capacidad}
                     </h:column>
 
 						<h:column>
-							<f:facet name="header">Dirección</f:facet>
+							<f:facet name="header">#{text.direccion}</f:facet>
                         #{espacio.direccion}
                     </h:column>
 
 						<h:column>
-							<f:facet name="header">Activo</f:facet>
+							<f:facet name="header">#{text.activo}</f:facet>
                         #{espacio.estado}
                     </h:column>
 
 						<h:column>
-							<f:facet name="header">Acciones</f:facet>
-							<p:commandButton value="Cambiar estado"
+							<f:facet name="header">#{text.acciones}</f:facet>
+							<p:commandButton value="#{text.btnEstado}"
 								action="#{propietarioBean.cambiarEstado(espacio.id)}"
 								icon="pi pi-refresh"
 								update=":espaciosForm" />

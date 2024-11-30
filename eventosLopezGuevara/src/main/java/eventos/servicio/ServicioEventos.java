@@ -1,5 +1,6 @@
 package eventos.servicio;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +14,8 @@ import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
 
-public class ServicioEventos implements IServicioEventos {
+@SuppressWarnings("serial")
+public class ServicioEventos implements IServicioEventos, Serializable  {
 
 	private Repositorio<Evento, String> repoEventos = FactoriaRepositorios.getRepositorio(Evento.class);
 	private Repositorio<EspacioFisico, String> repoEspacios = FactoriaRepositorios.getRepositorio(EspacioFisico.class);

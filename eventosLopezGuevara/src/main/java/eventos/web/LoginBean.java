@@ -40,7 +40,7 @@ public class LoginBean implements Serializable {
 		if ("propietario".equals(rol)) {
 			redirect("propietario/home.xhtml");
 		} else if ("organizador".equals(rol)) {
-			redirect("organizadorHome.xhtml");
+			redirect("organizador/home.xhtml");
 		}
 
 	}
