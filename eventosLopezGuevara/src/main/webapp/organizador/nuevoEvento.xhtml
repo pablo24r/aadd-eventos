@@ -1,0 +1,100 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewAction
+				action="#{organizadorBean.comprobarRol(loginBean.nombreUsuario, loginBean.rol)}" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="formCrearEvento">
+			<!-- Título y descripción del panel -->
+			<p:panel header="Nuevo evento" styleClass="custom-header">
+				<div
+					style="display: flex; gap: 20px; justify-content: space-between;">
+					<div style="flex: 1;">
+						<!-- Columna 1 -->
+						<!-- Nombre del evento -->
+						<p:outputLabel for="nombreEvento" value="📛 Nombre del Evento:" />
+						<p:inputText id="nombreEvento"
+							value="#{organizadorBean.nombreEvento}" required="true"
+							requiredMessage="El nombre del evento es obligatorio."
+							style="width: 100%;" />
+
+						<!-- Descripción del evento -->
+						<p:outputLabel for="descripcionEvento" value="📝 Descripción:" />
+						<p:inputTextarea id="descripcionEvento"
+							value="#{organizadorBean.descripcionEvento}" required="true"
+							requiredMessage="La descripción es obligatoria."
+							style="width: 100%;" rows="4" />
+
+						<!-- Organizador -->
+						<p:outputLabel for="organizadorEvento" value="👤 Organizador:" />
+						<p:inputText id="organizadorEvento"
+							value="#{loginBean.nombreUsuario}" disabled="true"
+							style="width: 100%;" />
+					</div>
+
+					<!-- Columna 2 -->
+					<div style="flex: 1;">
+						<!-- Categoría del evento -->
+						<p:outputLabel for="categoriaEvento" value="🔖 Categoría:" />
+						<p:selectOneMenu id="categoriaEvento"
+							value="#{organizadorBean.categoriaEvento}" required="true"
+							requiredMessage="Seleccione una categoría" style="width: 100%;">
+							<f:selectItems value="#{organizadorBean.categorias}"
+								var="categoria" itemLabel="#{categoria}"
+								itemValue="#{categoria}" />
+						</p:selectOneMenu>
+
+						<!-- Fecha de inicio -->
+						<p:outputLabel for="fechaInicioEvento" value="📅 Fecha de Inicio:" />
+						<p:inputText id="fechaInicioEvento"
+							value="#{organizadorBean.fechaInicio}" disabled="true"
+							style="width: 100%;" />
+
+						<!-- Fecha de fin -->
+						<p:outputLabel for="fechaFinEvento" value="📅 Fecha de Fin:" />
+						<p:inputText id="fechaFinEvento"
+							value="#{organizadorBean.fechaFin}" disabled="true"
+							style="width: 100%;" />
+
+						<!-- Número de plazas -->
+						<p:outputLabel for="numPlazasEvento" value="👥 Número de Plazas:" />
+						<p:spinner id="numPlazasEvento"
+							value="#{organizadorBean.numPlazasEvento}" min="1" max="#{organizadorBean.espacioElegido.capacidad}"
+							required="true"
+							requiredMessage="El número de plazas es obligatorio."
+							style="width: 100%;" />
+
+						<!-- Espacio físico -->
+						<p:outputLabel for="espacioEvento" value="📍 Espacio Físico:" />
+						<p:inputText id="espacioEvento"
+							value="#{organizadorBean.espacioElegido.nombre}" disabled="true"
+							style="width: 100%;" />
+					</div>
+				</div>
+				<p:messages id="mensajes" showDetail="true" autoUpdate="true"
+					closable="true" />
+				
+				<!-- Botones -->
+				<div
+					style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 100px;">
+					<p:commandButton value="Volver" action="#{organizadorBean.volver}"
+						icon="pi pi-arrow-left" styleClass="custom-button"
+						immediate="true" />
+					<p:commandButton value="Crear Evento"
+						action="#{organizadorBean.crearEvento}"
+						update="formCrearEvento:mensajes numPlazasEvento" icon="pi pi-calendar-plus"
+						styleClass="custom-button" />
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

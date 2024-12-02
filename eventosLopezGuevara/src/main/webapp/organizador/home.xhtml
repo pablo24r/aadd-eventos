@@ -5,38 +5,100 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewAction
+				action="#{organizadorBean.comprobarRol(loginBean.nombreUsuario, loginBean.rol)}" />
+		</f:metadata>
+	</ui:define>
 
-	<!-- Contenido principal -->
 	<ui:define name="content">
-		<h:form>
-			<p:panel header="Crear Evento">
-				<p:outputLabel for="nombreEvento" value="Nombre del Evento:" />
-				<p:inputText id="nombreEvento"
-					value="#{organizadorBean.nombreEvento}" />
+		<h:form id="formBuscador">
+			<!-- Header con título y descripción -->
+			<p:panel header="#{text.tituloOrganizador}"
+				styleClass="custom-header">
+				<p:messages id="mensajes" showDetail="true" autoUpdate="true"
+					closable="true" />
 
-				<p:outputLabel for="descripcion" value="Descripción:" />
-				<p:inputTextarea id="descripcion"
-					value="#{organizadorBean.descripcionEvento}" />
+				<!-- Panel con filtros de búsqueda -->
+				<p:panel id="panelFiltros" header="#{text.filtros}"
+					styleClass="custom-panel" toggleable="true"
+					collapsed="#{organizadorBean.mostrarPanel}">
+					<p:panelGrid columns="3" styleClass="ui-panelgrid-blank"
+						columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4">
+						<!-- Fecha de Inicio -->
+						<p:outputLabel for="fechaInicio" value="📅 #{text.fechaInicio}" />
+						<p:datePicker id="fechaInicio"
+							value="#{organizadorBean.fechaInicio}" showIcon="true"
+							required="true" style="width: 100%;" />
 
-				<p:outputLabel for="fechaInicio" value="Fecha Inicio:" />
-				<p:calendar id="fechaInicio"
-					value="#{organizadorBean.fechaInicioEvento}" showTime="true" />
+						<!-- Fecha de Fin -->
+						<p:outputLabel for="fechaFin" value="📅 #{text.fechaFin}" />
+						<p:datePicker id="fechaFin" value="#{organizadorBean.fechaFin}"
+							showIcon="true" required="true" style="width: 100%;" />
 
-				<p:outputLabel for="fechaFin" value="Fecha Fin:" />
-				<p:calendar id="fechaFin" value="#{organizadorBean.fechaFinEvento}"
-					showTime="true" />
+						<!-- Capacidad Mínima -->
+						<p:outputLabel for="capacidad" value="👥 #{text.capacidadMinima}" />
+						<p:spinner id="capacidad"
+							value="#{organizadorBean.capacidadMinima}" min="1"
+							required="true" style="width: 50%;" />
+					</p:panelGrid>
 
-				<p:outputLabel for="espacio" value="Espacio:" />
-				<p:selectOneMenu id="espacio" value="#{organizadorBean.idEspacio}">
-					<f:selectItems value="#{organizadorBean.espaciosDisponibles}"
-						var="espacio" itemValue="#{espacio.id}"
-						itemLabel="#{espacio.nombre}" />
-				</p:selectOneMenu>
+					<!-- Botón Buscar -->
+					<div style="text-align: center; margin-top: 20px;">
+						<p:commandButton value="#{text.btnBuscar}"
+							action="#{organizadorBean.buscarEspacios}"
+							update="formBuscador:tablaEspacios formBuscador:mensajes formBuscador:panelDisponibles formBuscador:panelFiltros"
+							icon="pi pi-search" styleClass="custom-button" />
+					</div>
+				</p:panel>
 
-				<p:commandButton value="Crear Evento"
-					action="#{organizadorBean.crearEvento()}" />
+				<!-- Panel con los espacios disponibles -->
+				<p:panel id="panelDisponibles" styleClass="custom-panel"
+					style="display:#{organizadorBean.mostrarPanel ? 'block' : 'none'};">
+					<p:outputLabel
+						value="#{text.espaciosDisponibles} #{organizadorBean.fechaInicio} - #{organizadorBean.fechaFin}" />
+
+					<p:dataTable id="tablaEspacios" value="#{organizadorBean.espacios}"
+						var="espacio" emptyMessage="#{text.noEspacios}" paginator="true"
+						rows="5" responsiveLayout="scroll"
+						styleClass="ui-datatable-striped ui-datatable-hoverable"
+						paginatorPosition="bottom" paginatorAlwaysVisible="false">
+
+						<!-- Columna: Nombre -->
+						<p:column headerText="🏷️ #{text.nombre}">
+							<h:outputText value="#{espacio.nombre}" />
+						</p:column>
+
+						<!-- Columna: Descripción -->
+						<p:column headerText="📝 #{text.descripcion}">
+							<h:outputText value="#{espacio.descripcion}" />
+						</p:column>
+
+						<!-- Columna: Capacidad -->
+						<p:column headerText="👥 #{text.capacidad}">
+							<h:outputText value="#{espacio.capacidad}" />
+						</p:column>
+
+						<!-- Columna: Dirección -->
+						<p:column headerText="📍 #{text.direccion}">
+							<h:outputText value="#{espacio.direccion}" />
+						</p:column>
+
+						<!-- Columna: Propietario -->
+						<p:column headerText="👤 #{text.propietario}">
+							<h:outputText value="#{espacio.propietario}" />
+						</p:column>
+
+						<!-- Columna: Botón Crear Evento -->
+						<p:column>
+							<p:commandButton value="#{text.btnNuevoEvento}"
+								action="#{organizadorBean.formularioEvento(espacio.id)}"
+								icon="pi pi-calendar-plus" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
 			</p:panel>
 		</h:form>
-
 	</ui:define>
 </ui:composition>
