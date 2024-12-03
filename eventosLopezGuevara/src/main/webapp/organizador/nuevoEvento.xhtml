@@ -15,27 +15,27 @@
 	<ui:define name="content">
 		<h:form id="formCrearEvento">
 			<!-- Título y descripción del panel -->
-			<p:panel header="Nuevo evento" styleClass="custom-header">
+			<p:panel header="#{text.nuevoEvento}" styleClass="custom-header">
 				<div
 					style="display: flex; gap: 20px; justify-content: space-between;">
 					<div style="flex: 1;">
 						<!-- Columna 1 -->
 						<!-- Nombre del evento -->
-						<p:outputLabel for="nombreEvento" value="📛 Nombre del Evento:" />
+						<p:outputLabel for="nombreEvento" value="📛 #{text.nombreEvento}" />
 						<p:inputText id="nombreEvento"
 							value="#{organizadorBean.nombreEvento}" required="true"
-							requiredMessage="El nombre del evento es obligatorio."
+							requiredMessage="#{text.reqNombre}"
 							style="width: 100%;" />
 
 						<!-- Descripción del evento -->
-						<p:outputLabel for="descripcionEvento" value="📝 Descripción:" />
+						<p:outputLabel for="descripcionEvento" value="📝 #{text.descripcion}:" />
 						<p:inputTextarea id="descripcionEvento"
 							value="#{organizadorBean.descripcionEvento}" required="true"
-							requiredMessage="La descripción es obligatoria."
+							requiredMessage="#{text.reqDescripcion}"
 							style="width: 100%;" rows="4" />
 
 						<!-- Organizador -->
-						<p:outputLabel for="organizadorEvento" value="👤 Organizador:" />
+						<p:outputLabel for="organizadorEvento" value="👤 #{text.organizador}" />
 						<p:inputText id="organizadorEvento"
 							value="#{loginBean.nombreUsuario}" disabled="true"
 							style="width: 100%;" />
@@ -44,7 +44,7 @@
 					<!-- Columna 2 -->
 					<div style="flex: 1;">
 						<!-- Categoría del evento -->
-						<p:outputLabel for="categoriaEvento" value="🔖 Categoría:" />
+						<p:outputLabel for="categoriaEvento" value="🔖 #{text.categoria}" />
 						<p:selectOneMenu id="categoriaEvento"
 							value="#{organizadorBean.categoriaEvento}" required="true"
 							requiredMessage="Seleccione una categoría" style="width: 100%;">
@@ -54,27 +54,26 @@
 						</p:selectOneMenu>
 
 						<!-- Fecha de inicio -->
-						<p:outputLabel for="fechaInicioEvento" value="📅 Fecha de Inicio:" />
+						<p:outputLabel for="fechaInicioEvento" value="📅 #{text.fechaInicio}" />
 						<p:inputText id="fechaInicioEvento"
 							value="#{organizadorBean.fechaInicio}" disabled="true"
 							style="width: 100%;" />
 
 						<!-- Fecha de fin -->
-						<p:outputLabel for="fechaFinEvento" value="📅 Fecha de Fin:" />
+						<p:outputLabel for="fechaFinEvento" value="📅 #{text.fechaFin}" />
 						<p:inputText id="fechaFinEvento"
 							value="#{organizadorBean.fechaFin}" disabled="true"
 							style="width: 100%;" />
 
 						<!-- Número de plazas -->
-						<p:outputLabel for="numPlazasEvento" value="👥 Número de Plazas:" />
+						<p:outputLabel for="numPlazasEvento" value="👥 #{text.numPlazas}" />
 						<p:spinner id="numPlazasEvento"
 							value="#{organizadorBean.numPlazasEvento}" min="1" max="#{organizadorBean.espacioElegido.capacidad}"
 							required="true"
-							requiredMessage="El número de plazas es obligatorio."
 							style="width: 100%;" />
 
 						<!-- Espacio físico -->
-						<p:outputLabel for="espacioEvento" value="📍 Espacio Físico:" />
+						<p:outputLabel for="espacioEvento" value="📍 #{text.espacioFisico}" />
 						<p:inputText id="espacioEvento"
 							value="#{organizadorBean.espacioElegido.nombre}" disabled="true"
 							style="width: 100%;" />
@@ -86,10 +85,10 @@
 				<!-- Botones -->
 				<div
 					style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 100px;">
-					<p:commandButton value="Volver" action="#{organizadorBean.volver}"
+					<p:commandButton value="#{text.btnVolver}" action="#{organizadorBean.volver}"
 						icon="pi pi-arrow-left" styleClass="custom-button"
 						immediate="true" />
-					<p:commandButton value="Crear Evento"
+					<p:commandButton value="#{text.btnCrearEvento}"
 						action="#{organizadorBean.crearEvento}"
 						update="formCrearEvento:mensajes numPlazasEvento" icon="pi pi-calendar-plus"
 						styleClass="custom-button" />

@@ -3,10 +3,10 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<ui:define name="metadata">
-
 		<f:metadata>
 			<f:viewAction
 				action="#{propietarioBean.cargarEspacios(loginBean.nombreUsuario, loginBean.rol)}" />
@@ -17,37 +17,41 @@
 	<ui:define name="content">
 		<h:body>
 			<h:form id="espaciosForm">
-				<p:panel header="#{text.espacios}">
-					<h:dataTable value="#{propietarioBean.espacios}" var="espacio"
-						styleClass="ui-widget" emptyMessage="No hay espacios disponibles">
-						<h:column>
-							<f:facet name="header">#{text.nombre}</f:facet>
-                        #{espacio.nombre}
-                    </h:column>
+				<p:panel header="#{text.espacios}" style="margin: 20px;">
 
-						<h:column>
-							<f:facet name="header">#{text.capacidad}</f:facet>
-                        #{espacio.capacidad}
-                    </h:column>
+					<!-- Tabla de espacios -->
+					<p:dataTable value="#{propietarioBean.espacios}" var="espacio"
+						id="dataTable" style="width: 100%;"
+						emptyMessage="#{text.ningunEspacio}" paginator="true" rows="10"
+						responsiveLayout="scroll" paginatorPosition="bottom"
+						paginatorAlwaysVisible="true">>
 
-						<h:column>
-							<f:facet name="header">#{text.direccion}</f:facet>
-                        #{espacio.direccion}
-                    </h:column>
+						<p:column headerText="#{text.nombre}" sortBy="#{espacio.nombre}">
+							<h:outputText value="#{espacio.nombre}" />
+						</p:column>
 
-						<h:column>
-							<f:facet name="header">#{text.activo}</f:facet>
-                        #{espacio.estado}
-                    </h:column>
+						<p:column headerText="#{text.capacidad}"
+							sortBy="#{espacio.capacidad}">
+							<h:outputText value="#{espacio.capacidad}" />
+						</p:column>
 
-						<h:column>
-							<f:facet name="header">#{text.acciones}</f:facet>
+						<p:column headerText="#{text.direccion}"
+							sortBy="#{espacio.direccion}">
+							<h:outputText value="#{espacio.direccion}" />
+						</p:column>
+
+						<p:column headerText="#{text.activo}" style="text-align: center;">
+							<h:outputText value="#{espacio.estado}" />
+						</p:column>
+
+						<p:column headerText="#{text.acciones}"
+							style="text-align: center;">
 							<p:commandButton value="#{text.btnEstado}"
 								action="#{propietarioBean.cambiarEstado(espacio.id)}"
-								icon="pi pi-refresh"
-								update=":espaciosForm" />
-						</h:column>
-					</h:dataTable>
+								icon="pi pi-refresh" styleClass="p-button-warning"
+								update=":espaciosForm:dataTable" />
+						</p:column>
+					</p:dataTable>
 				</p:panel>
 			</h:form>
 		</h:body>

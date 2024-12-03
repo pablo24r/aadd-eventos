@@ -32,6 +32,7 @@ public class PropietarioBean implements Serializable {
 	private ActiveLocale localeConfig;
 
 	private List<EspacioDTO> espacios;
+;
 	private String usuario;
 	private String rol;
 
@@ -67,7 +68,6 @@ public class PropietarioBean implements Serializable {
 	}
 
 	public void cambiarEstado(String idEspacio) {
-		System.out.println("Cerrar espacio con id:" + idEspacio);
 		try {
 			EspacioFisico espacio = servicioEspacios.getEspacio(idEspacio);
 			if (espacio.isActivo()) {
@@ -76,7 +76,7 @@ public class PropietarioBean implements Serializable {
 				servicioEspacios.activar(idEspacio);
 			}
 			// Recargar la lista de espacios para reflejar los cambios
-			cargarEspacios(usuario, rol); // Cambia esto con el usuario actual
+			cargarEspacios(usuario, rol); 
 		} catch (RepositorioException | EntidadNoEncontrada e) {
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 					localeConfig.getBundle().getString("errorEstado")));

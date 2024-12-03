@@ -130,7 +130,7 @@ public class EspacioFisico implements Identificable {
 	}
 
 	public EspacioDTO toDTO() {
-		return new EspacioDTO(getId(), getNombre(), getCapacidad() + "", getDireccion(), isActivo() + "");
+		return new EspacioDTO(getId(), getNombre(), getDescripcion(), getCapacidad() + "", getDireccion(), getPropietario(), isActivo());
 	}
 
 }

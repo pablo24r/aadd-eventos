@@ -3,17 +3,21 @@ package eventos.dto;
 public class EspacioDTO {
 	private String id;
 	private String nombre;
+	private String descripcion;
 	private String capacidad;
 	private String direccion;
-	private String estado;
-	
+	private String propietario;
+	private boolean estado;
 
-	public EspacioDTO(String id,String nombre, String capacidad, String direccion, String estado) {
+	public EspacioDTO(String id, String nombre, String descripcion, String capacidad, String direccion,
+			String propietario, boolean estado) {
 		super();
 		this.setId(id);
 		this.nombre = nombre;
+		this.descripcion = descripcion;
 		this.capacidad = capacidad;
 		this.direccion = direccion;
+		this.propietario = propietario;
 		this.estado = estado;
 	}
 
@@ -41,11 +45,11 @@ public class EspacioDTO {
 		this.direccion = direccion;
 	}
 
-	public String getEstado() {
+	public boolean getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
 
@@ -55,6 +59,22 @@ public class EspacioDTO {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(String propietario) {
+		this.propietario = propietario;
 	}
 
 }

@@ -22,7 +22,7 @@ public interface IServicioEspacios {
 	
 	void activar(String idEspacio) throws RepositorioException, EntidadNoEncontrada ;
 	
-	List<EspacioFisico> buscarEspacios(LocalDateTime inicio, LocalDateTime fin, int capacidad) throws RepositorioException, EntidadNoEncontrada ;
+	List<EspacioDTO> buscarEspacios(LocalDateTime inicio, LocalDateTime fin, int capacidad) throws RepositorioException, EntidadNoEncontrada ;
 	
 	List<EspacioDTO> verEspaciosCreados(String usuario) throws RepositorioException;
 	

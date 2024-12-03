@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import eventos.dto.EspacioDTO;
-import eventos.modelo.EspacioFisico;
 import eventos.modelo.PuntoInteres;
 import eventos.servicio.IServicioEspacios;
 import eventos.servicio.IServicioPuntoInteres;
@@ -23,16 +22,16 @@ public class TestsEspacios {
 
 //		----	Tests Espacios Físicos ----
 
-		String idEspacio = servEspacios.alta("Auditorio", "Pablo", 5000, "Calle mayor 123", 37.99, -1.13, "blablabla");
+		String idEspacio = servEspacios.alta("Restaurante", "Juan", 200, "Plaza zzz", 37.99, -1.13, "blablabla123");
 		System.out.println(idEspacio);
 		
-		servEspacios.modificar(idEspacio, null, 1000, "descripción 9");
+		servEspacios.modificar(idEspacio, null, 200, "descripción 2");
 		servEspacios.asignarPuntos(idEspacio, ListaPuntosCercanos);
 		//servEspacios.cerrar("701");
 		servEspacios.activar(idEspacio);
-		List<EspacioFisico> disponibles =servEspacios.buscarEspacios(LocalDateTime.now(), LocalDateTime.now().plusDays(7), 1000);
+		List<EspacioDTO> disponibles =servEspacios.buscarEspacios(LocalDateTime.now(), LocalDateTime.now().plusDays(7), 1000);
 		System.out.println("Espacios disponibles esta semana:");
-		for (EspacioFisico e : disponibles){
+		for (EspacioDTO e : disponibles){
 			System.out.println(e.getNombre());
 		}
 		

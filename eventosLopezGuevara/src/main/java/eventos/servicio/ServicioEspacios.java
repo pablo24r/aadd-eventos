@@ -141,7 +141,7 @@ public class ServicioEspacios implements IServicioEspacios, Serializable {
 	}
 
 	@Override
-	public List<EspacioFisico> buscarEspacios(LocalDateTime inicio, LocalDateTime fin, int capacidad)
+	public List<EspacioDTO> buscarEspacios(LocalDateTime inicio, LocalDateTime fin, int capacidad)
 			throws RepositorioException, EntidadNoEncontrada {
 
 		// Precondiciones
@@ -152,7 +152,7 @@ public class ServicioEspacios implements IServicioEspacios, Serializable {
 			throw new IllegalArgumentException("La capacidad debe ser mayor que cero.");
 		}
 
-		List<EspacioFisico> espaciosDisponibles = new LinkedList<EspacioFisico>();
+		List<EspacioDTO> espaciosDisponibles = new LinkedList<EspacioDTO>();
 		List<Evento> eventos = repoEventos.getAll();
 		List<EspacioFisico> espacios = repoEspacios.getAll();
 
@@ -179,7 +179,7 @@ public class ServicioEspacios implements IServicioEspacios, Serializable {
 					}
 				}
 				if (flag) {
-					espaciosDisponibles.add(esp);
+					espaciosDisponibles.add(esp.toDTO());
 				}
 			}
 		}

@@ -13,7 +13,6 @@ import javax.inject.Named;
 
 import eventos.dto.EspacioDTO;
 import eventos.modelo.Categoria;
-import eventos.modelo.EspacioFisico;
 import eventos.servicio.ServicioEspacios;
 import eventos.servicio.ServicioEventos;
 import eventos.web.locale.ActiveLocale;
@@ -40,7 +39,7 @@ public class OrganizadorBean implements Serializable {
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFin;
 	private String capacidadMinima = "1";
-	private List<EspacioFisico> espacios;
+	private List<EspacioDTO> espacios;
 
 	private EspacioDTO espacioElegido;
 
@@ -77,12 +76,12 @@ public class OrganizadorBean implements Serializable {
 		try {
 			espacios = servicioEspacios.buscarEspacios(fechaInicio, fechaFin, Integer.parseInt(capacidadMinima));
 			if (espacios.isEmpty()) {
-				facesContext.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "No se encontraron espacios disponibles.", ""));
+				facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+						localeConfig.getBundle().getString("noEspacios"), ""));
 			}
 		} catch (Exception e) {
 			facesContext.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al buscar espacios: " + e.getMessage(), ""));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, localeConfig.getBundle().getString("errorGen"), ""));
 		}
 	}
 
@@ -124,11 +123,12 @@ public class OrganizadorBean implements Serializable {
 			System.out.println(numPlazasEvento);
 			servicioEventos.alta(nombreEvento, descripcionEvento, nombreOrganizador, categoria, fechaInicio, fechaFin,
 					Integer.parseInt(numPlazasEvento), espacioElegido.getId());
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "EVENTO CREADO"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					localeConfig.getBundle().getString("exito"), localeConfig.getBundle().getString("eventoCreado")));
 		} catch (NumberFormatException | RepositorioException | EntidadNoEncontrada e) {
 			facesContext.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "ERROR AL CREAR EL EVENTO"));
-			
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", localeConfig.getBundle().getString("errorEvento")));
+
 		}
 	}
 
@@ -190,11 +190,11 @@ public class OrganizadorBean implements Serializable {
 		this.capacidadMinima = capacidadMinima;
 	}
 
-	public List<EspacioFisico> getEspacios() {
+	public List<EspacioDTO> getEspacios() {
 		return espacios;
 	}
 
-	public void setEspacios(List<EspacioFisico> espaciosDisponibles) {
+	public void setEspacios(List<EspacioDTO> espaciosDisponibles) {
 		this.espacios = espaciosDisponibles;
 	}
 
@@ -237,7 +237,6 @@ public class OrganizadorBean implements Serializable {
 	public void setFechaFinEvento(LocalDateTime fechaFinEvento) {
 		this.fechaFinEvento = fechaFinEvento;
 	}
-
 
 	public boolean isMostrarPanel() {
 		return mostrarPanel;
